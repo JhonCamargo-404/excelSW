@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { addEdge, useEdgesState, useNodesState } from 'react-flow-renderer';
 import Sidebar from './components/Sidebar/Sidebar';
 import Editor from './components/Editor/Editor';
 import NodeForm from './components/Editor/NodeForm';
+import LoggerBanner from './components/Logger/LoggerBanner'; // Componente para registro, login y recuperación
 import { Modal } from 'antd';
 import './styles/App.css';
 
@@ -18,6 +20,8 @@ const App = () => {
     const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
     const [nodeToDelete, setNodeToDelete] = useState(null);
     const [isFormVisible, setIsFormVisible] = useState(false); // Inicialmente, el formulario está oculto
+
+    const isAuthenticated = !!localStorage.getItem('token'); // Comprueba si hay un token en localStorage
 
     const addNode = (type) => {
         const newNode = {
@@ -94,67 +98,85 @@ const App = () => {
     };
 
     return (
-        <div className="app">
-            <Sidebar
-                sidebarExpanded={sidebarExpanded}
-                setSidebarExpanded={setSidebarExpanded}
-                createNode={addNode}
-            />
-            <Editor
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                setSelectedNode={(node) => {
-                    setSelectedNode(node);
-                    setIsFormVisible(true); // Mostrar el formulario al seleccionar un nodo
-                }}
-                selectedNodeId={selectedNode?.id}
-                onPaneClick={handlePaneClick}
-                fitView
-            />
-            {/* Renderizar condicionalmente el formulario */}
-            {selectedNode && isFormVisible && (
-                <div className="sidebar-right">
+        <Router>
+            <Routes>
+                {/* Ruta del Logger unificado */}
+                <Route path="/logger" element={<LoggerBanner />} />
 
-                    <NodeForm
-                        node={selectedNode}
-                        onUpdateNode={onUpdateNode}
-                        onDeleteNode={onDeleteNode}
-                        onCloseForm={handleCloseForm} // Pasar la función de cierre como prop
-                    />
-                </div>
-            )}
+                {/* Ruta protegida para la aplicación principal */}
+                <Route
+                    path="/app"
+                    element={
+                        isAuthenticated ? (
+                            <div className="app">
+                                <Sidebar
+                                    sidebarExpanded={sidebarExpanded}
+                                    setSidebarExpanded={setSidebarExpanded}
+                                    createNode={addNode}
+                                />
+                                <Editor
+                                    nodes={nodes}
+                                    edges={edges}
+                                    onNodesChange={onNodesChange}
+                                    onEdgesChange={onEdgesChange}
+                                    onConnect={onConnect}
+                                    setSelectedNode={(node) => {
+                                        setSelectedNode(node);
+                                        setIsFormVisible(true); // Mostrar el formulario al seleccionar un nodo
+                                    }}
+                                    selectedNodeId={selectedNode?.id}
+                                    onPaneClick={handlePaneClick}
+                                    fitView
+                                />
+                                {/* Renderizar condicionalmente el formulario */}
+                                {selectedNode && isFormVisible && (
+                                    <div className="sidebar-right">
+                                        <NodeForm
+                                            node={selectedNode}
+                                            onUpdateNode={onUpdateNode}
+                                            onDeleteNode={onDeleteNode}
+                                            onCloseForm={handleCloseForm} // Pasar la función de cierre como prop
+                                        />
+                                    </div>
+                                )}
 
-            {/* Modal de advertencia si el nodo no se puede eliminar */}
-            <Modal
-                title="Advertencia"
-                open={isWarningModalOpen}
-                onOk={handleCloseWarningModal}
-                onCancel={handleCloseWarningModal}
-                okText="Cerrar"
-                okButtonProps={{ style: { backgroundColor: '#ff4d4f', color: '#fff', width: '100%' } }}
-                cancelButtonProps={{ style: { display: 'none' } }}  // Eliminar el botón de cancelación
-            >
-                <p>No se puede eliminar un nodo con conexiones salientes.</p>
-            </Modal>
+                                {/* Modal de advertencia si el nodo no se puede eliminar */}
+                                <Modal
+                                    title="Advertencia"
+                                    open={isWarningModalOpen}
+                                    onOk={handleCloseWarningModal}
+                                    onCancel={handleCloseWarningModal}
+                                    okText="Cerrar"
+                                    okButtonProps={{ style: { backgroundColor: '#ff4d4f', color: '#fff', width: '100%' } }}
+                                    cancelButtonProps={{ style: { display: 'none' } }}  // Eliminar el botón de cancelación
+                                >
+                                    <p>No se puede eliminar un nodo con conexiones salientes.</p>
+                                </Modal>
 
+                                {/* Modal de confirmación para la eliminación del nodo */}
+                                <Modal
+                                    title="Confirmar Eliminación"
+                                    open={isDeleteModalOpen}
+                                    onOk={handleConfirmDelete}
+                                    onCancel={handleCancelDelete}
+                                    okText="Eliminar"
+                                    cancelText="Cancelar"
+                                    okButtonProps={{ style: { backgroundColor: '#ff4d4f', color: '#fff' } }}
+                                    cancelButtonProps={{ style: { backgroundColor: '#d9d9d9', color: '#000' } }}
+                                >
+                                    <p>¿Estás seguro de que deseas eliminar este nodo? Esta acción no se puede deshacer.</p>
+                                </Modal>
+                            </div>
+                        ) : (
+                            <Navigate to="/logger" />
+                        )
+                    }
+                />
 
-            {/* Modal de confirmación para la eliminación del nodo */}
-            <Modal
-                title="Confirmar Eliminación"
-                open={isDeleteModalOpen}
-                onOk={handleConfirmDelete}
-                onCancel={handleCancelDelete}
-                okText="Eliminar"
-                cancelText="Cancelar"
-                okButtonProps={{ style: { backgroundColor: '#ff4d4f', color: '#fff' } }}
-                cancelButtonProps={{ style: { backgroundColor: '#d9d9d9', color: '#000' } }}
-            >
-                <p>¿Estás seguro de que deseas eliminar este nodo? Esta acción no se puede deshacer.</p>
-            </Modal>
-        </div>
+                {/* Redirección predeterminada */}
+                <Route path="*" element={<Navigate to="/logger" />} />
+            </Routes>
+        </Router>
     );
 };
 
