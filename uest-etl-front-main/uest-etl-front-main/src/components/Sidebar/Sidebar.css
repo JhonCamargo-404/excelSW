@@ -1,0 +1,78 @@
+/* Estilo para el Sidebar */
+.sidebar {
+  background: #001529;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.2s ease-in-out;
+  width: 250px; /* Ancho expandido */
+}
+
+.sidebar.collapsed {
+  width: 80px; /* Ancho colapsado */
+}
+
+/* Estilo para el botón de colapso */
+.collapse-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+}
+
+.collapse-button .ant-btn {
+  color: white;
+  background: #003a8c;
+  border: none;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  transition: background 0.3s, color 0.3s;
+}
+
+.collapse-button .ant-btn:hover {
+  background: #0050b3;
+}
+
+/* Estilo para el contenido del sidebar */
+.sidebar-content {
+  margin-top: 64px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-content .ant-btn {
+  width: 100%;
+  text-align: left;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #002140;
+  color: white;
+  padding: 10px;
+  transition: padding 0.3s ease-in-out;
+}
+
+.sidebar-content .ant-btn:hover {
+  background: #003a8c;
+}
+
+/* Mantén el ícono visible y centrado cuando el sidebar está colapsado */
+.sidebar-content .ant-btn .anticon {
+  font-size: 20px;
+  transition: font-size 0.2s;
+}
+
+.sidebar.collapsed .sidebar-content .ant-btn .anticon {
+  font-size: 20px;
+}
+
+/* Ajusta el padding del botón en estado colapsado */
+.sidebar.collapsed .sidebar-content .ant-btn {
+  padding: 12px; /* Mantiene un buen espacio en estado colapsado */
+}

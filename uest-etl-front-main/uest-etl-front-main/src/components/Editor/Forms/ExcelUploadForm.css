@@ -1,0 +1,153 @@
+.excel-upload-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 2px dashed #d9d9d9;
+  border-radius: 4px;
+  background-color: #fafafa;
+  transition: border-color 0.3s;
+}
+
+.excel-upload-form:hover {
+  border-color: #bfbfbf;
+}
+
+.form-title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.drag-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 2px dashed #d9d9d9;
+  border-radius: 4px;
+  background-color: #f0f2f5;
+  color: #333;
+  font-size: 1rem;
+  margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-input-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #002140;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
+}
+
+.sheet-select {
+  width: 100%; /* Ajusta el ancho al 100% del contenedor */
+  max-width: 400px; /* O establece un ancho máximo */
+}
+
+.sheet-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  width: 100%;
+  gap: 10px;
+}
+
+.data-table {
+  margin-top: 20px;
+  width: 100%;
+  flex: 1;
+  overflow-x: auto; /* Permite el scroll horizontal si el contenido es más amplio */
+}
+
+.data-table .ant-table-thead th {
+  white-space: nowrap; /* Fuerza el texto a mantenerse en una línea */
+}
+
+.data-table .ant-table {
+  font-size: 0.85rem; /* Ajusta el tamaño de la fuente para todo el contenido de la tabla */
+}
+
+.data-table .ant-table-thead th {
+  white-space: nowrap;
+  font-size: 0.85rem; /* Ajusta también el tamaño de la fuente de los encabezados */
+}
+
+.data-table .ant-table-tbody td {
+  font-size: 0.75rem; /* Ajusta el tamaño de la fuente de las celdas del cuerpo de la tabla */
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  position: fixed; /* Hace que el footer sea flotante */
+  bottom: 0; /* Lo fija en la parte inferior */
+  right: 0; /* Alineado al lado derecho */
+  width: 100%; /* Para que ocupe el ancho completo del contenedor */
+  padding: 10px 20px;
+  background-color: #fafafa; /* Fondo que resalta sobre el grid */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  z-index: 100; /* Para asegurarnos de que esté por encima del grid */
+}
+
+.save-button {
+  background-color: #002140;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 150px;
+}
+
+.save-button:hover {
+  background-color: #0050b3;
+}
+
+.save-button:active {
+  background-color: #003a6a;
+}
+
+.file-input-button .anticon {
+  margin-right: 8px; /* Ajusta este valor según el espacio que prefieras */
+}
+
+.name-input {
+  flex: 2; /* Aumenta el valor de 'flex' para ampliar el input */
+  padding: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.file-path {
+  margin-top: 10px;
+  font-size: 0.875rem;
+  color: #333;
+  overflow: hidden; /* Asegura que el texto largo no rompa el diseño */
+  text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es muy largo */
+  white-space: nowrap; /* Evita el salto de línea */
+}

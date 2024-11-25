@@ -1,0 +1,29 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD} # Usar la variable del archivo .env
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.admin().ping()"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  excel-service:
+    build: .
+    container_name: excel_service
+    env_file:
+      - .env # Cargar variables de entorno desde el archivo .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb # Eliminada la condición
+
+volumes:
+  mongo_data:
