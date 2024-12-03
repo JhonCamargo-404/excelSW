@@ -20,12 +20,6 @@ const LoggerBanner = () => {
                                 Regístrate aquí
                             </span>
                         </p>
-                        <p>
-                            ¿Olvidaste tu contraseña?{' '}
-                            <span className="link" onClick={() => setView('recover')}>
-                                Recuperar contraseña
-                            </span>
-                        </p>
                     </>
                 )}
                 {view === 'register' && (
@@ -34,18 +28,6 @@ const LoggerBanner = () => {
                         <RegisterForm />
                         <p>
                             ¿Ya tienes una cuenta?{' '}
-                            <span className="link" onClick={() => setView('login')}>
-                                Inicia sesión
-                            </span>
-                        </p>
-                    </>
-                )}
-                {view === 'recover' && (
-                    <>
-                        <h2>Recupera tu Contraseña</h2>
-                        <RecoverPassword />
-                        <p>
-                            ¿Recordaste tu contraseña?{' '}
                             <span className="link" onClick={() => setView('login')}>
                                 Inicia sesión
                             </span>

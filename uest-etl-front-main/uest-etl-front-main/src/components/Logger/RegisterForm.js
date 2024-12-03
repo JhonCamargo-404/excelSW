@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { notification } from 'antd';
 import { API_BASE_URL } from '../../config';
 
 
@@ -18,12 +19,25 @@ const RegisterForm = () => {
                 body: JSON.stringify({ username, password }),
             });
 
-            if (!response.ok) throw new Error('Error al registrar usuario');
+            if (!response.ok) {
+                throw new Error('Error al registrar usuario');
+            }
 
-            setMessage('Registro exitoso. Redirigiendo a login...');
-            setTimeout(() => navigate('/logger'), 2000); // Redirigir a login después de 2 segundos
+            // Notificación de éxito al registrarse
+            notification.success({
+                message: 'Registro exitoso',
+                description: 'Te has registrado correctamente. Ahora puedes iniciar sesión.',
+            });
+
+            setTimeout(() => {
+                navigate('/login'); // Redirigir a la página de login
+            }, 2000); // Espera 2 segundos antes de redirigir
         } catch (error) {
-            setMessage(error.message);
+            // Notificación de error
+            notification.error({
+                message: 'Error en el registro',
+                description: error.message || 'Hubo un problema al registrarte.',
+            });
         }
     };
 

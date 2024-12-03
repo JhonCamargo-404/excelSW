@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { notification } from 'antd';
 import { API_BASE_URL } from '../../config';
 
 
@@ -15,17 +16,31 @@ const LoginForm = () => {
             const response = await fetch(`${API_BASE_URL}/token`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ username, password }),
+                body: new URLSearchParams({ username, password }), // Enviar credenciales al backend
             });
 
-            if (!response.ok) throw new Error('Credenciales incorrectas');
+            if (!response.ok) {
+                throw new Error('Credenciales incorrectas');
+            }
 
             const data = await response.json();
             localStorage.setItem('token', data.access_token); // Guardar el token
-            setMessage('Inicio de sesión exitoso. Redirigiendo...');
-            setTimeout(() => navigate('/app'), 2000); // Redirigir a la app principal después de 2 segundos
+
+            // Notificación de éxito al loguearse
+            notification.success({
+                message: 'Inicio de sesión exitoso',
+                description: 'Has iniciado sesión correctamente.',
+            });
+
+            setTimeout(() => {
+                navigate('/app'); // Redirigir a la aplicación principal
+            }, 2000); // Espera 2 segundos antes de redirigir
         } catch (error) {
-            setMessage(error.message);
+            // Notificación de error
+            notification.error({
+                message: 'Error en el inicio de sesión',
+                description: error.message || 'Hubo un problema al iniciar sesión.',
+            });
         }
     };
 
