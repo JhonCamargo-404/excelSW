@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import RecoverPassword from './RecoverPassword';
-import './LoggerBanner.css'; // Puedes agregar estilos personalizados
+import '../../styles/AuthForm.css'; // Puedes agregar estilos personalizados
 
 const LoggerBanner = () => {
     const [view, setView] = useState('login'); // Controla la vista actual

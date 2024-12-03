@@ -1,0 +1,89 @@
+/* AuthForm.css */
+
+/* Contenedor principal del LoggerBanner */
+.logger-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f7fa; /* Fondo claro */
+}
+
+/* Contenedor de los formularios */
+.form-container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+/* Títulos de los formularios */
+.form-container h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Estilo de los inputs */
+.form-container input {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.3s ease;
+}
+
+.form-container input:focus {
+    border: 1px solid #4CAF50;
+    outline: none;
+}
+
+/* Botón de submit */
+.form-container button {
+    width: 100%;
+    padding: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.form-container button:hover {
+    background-color: #45a049;
+}
+
+/* Enlaces para navegar entre el login, registro y recuperación */
+.form-container .link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.form-container .link:hover {
+    text-decoration: underline;
+}
+
+.form-container p {
+    font-size: 0.9rem;
+    margin-top: 15px;
+}
+
+/* Mensajes de error y éxito */
+.form-container p.error {
+    color: #d9534f;
+}
+
+.form-container p.success {
+    color: #28a745;
+}
